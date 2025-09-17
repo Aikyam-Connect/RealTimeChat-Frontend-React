@@ -1,7 +1,9 @@
-import { useState } from "react";
-
 function App() {
-    return <><h1>let's build together</h1></>;
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <h1 className="text-4xl font-bold text-indigo-600">let's build together 🚀</h1>
+        </div>
+    );
 }
 
 export default App;
