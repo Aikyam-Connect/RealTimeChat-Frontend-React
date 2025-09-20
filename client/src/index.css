@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animated hamburger icon */
+.hamburger-icon span {
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  background-color: currentColor;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.hamburger-icon span:nth-child(2) {
+  margin: 4px 0;
+}
+.hamburger-icon.open span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger-icon.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-icon.open span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
