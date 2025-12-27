@@ -1,9 +1,37 @@
-function App() {
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { ChatProvider } from './context/ChatContext';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+
+const PrivateRoute = ({ children }) => {
+    const { user, loading } = useAuth();
+
+    if (loading) return <div className="text-white p-10">Loading...</div>;
+
+    return user ? (
+        <ChatProvider>
+            {children}
+        </ChatProvider>
+    ) : <Navigate to="/login" />;
+};
+
+const App = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <h1 className="text-4xl font-bold text-indigo-600">let's build together 🚀</h1>
-        </div>
+        <BrowserRouter>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
+                    } />
+                </Routes>
+            </AuthProvider>
+        </BrowserRouter>
     );
-}
+};
 
 export default App;
