@@ -1,0 +1,64 @@
+---
+description: Frontend Development Rules and Standards for RealTimeChat (React + Vite)
+globs: *.js, *.jsx, *.css, package.json
+---
+
+# RealTimeChat Frontend - AI Coding Assistant Configuration
+
+## Project Overview
+This project is a real-time chat application frontend built with **React 19** and **Vite**. It uses **Tailwind CSS** for styling and standard JavaScript (ES Modules).
+
+## Technology Stack
+- **Framework**: React 19 (`react`, `react-dom`)
+- **Build Tool**: Vite (`vite`)
+- **Language**: JavaScript (ES6+ Module syntax) - *.jsx files for React components.
+- **Styling**: Tailwind CSS v3.4 (`postcss`, `autoprefixer`)
+- **Icons**: Lucide React (`lucide-react`)
+- **Routing**: React Router DOM v7 (`react-router-dom`)
+- **HTTP Client**: Axios (`axios`)
+- **Linting**: ESLint v9 (w/ `globals`, `react-hooks`, `react-refresh`)
+
+## Project Structure
+```text
+src/
+  ├── assets/       # Static assets (images, fonts)
+  ├── components/   # Reusable UI components
+  ├── context/      # React Context (State Management)
+  ├── pages/        # Page components (Routed Views)
+  ├── services/     # API Service calls (Axios wrappers)
+  ├── App.jsx       # Main App Component
+  ├── main.jsx      # Entry point (ReactDOM.createRoot)
+  └── index.css     # Global styles & Tailwind directives
+```
+
+## Coding Standards & Rules
+
+### 1. General JavaScript/React
+- Use **Functional Components** with Hooks. Do NOT use Class components.
+- Use **.jsx** extension for all files containing JSX.
+- **Naming**:
+    - Components: **PascalCase** (`ChatWindow.jsx`, `function ChatWindow() {}`)
+    - Functions/Variables: **camelCase** (`sendMessage`, `currentUser`)
+    - Constants: **UPPER_SNAKE_CASE** (`MAX_RETRY_COUNT`)
+- **Hooks Rules**: Follow strict Rules of Hooks (top level only, dependency arrays).
+
+### 2. Styling (Tailwind CSS)
+- **Primary Method**: Use Tailwind utility classes directly in `className`.
+- Avoid creating separate `.css` files for components.
+- Use `lucide-react` for icons with consistent sizing (e.g., `<Send size={20} />`).
+- **Responsive Design**: Use Tailwind's mobile-first prefixes (`md:`, `lg:`) to ensure responsiveness.
+
+### 3. State Management
+- Use **React Context** for global state (Auth, Theme, etc.).
+- Use localized `useState` for component-specific state.
+- Avoid passing props too deep; prefer Context or Composition.
+
+### 4. API & Network
+- Place all API calls in `src/services/`.
+- Use the configured `axios` instance (if available) with base URL and interceptors.
+- Handle errors gracefully (toast notifications or UI feedback).
+- Use `async/await` for asynchronous operations.
+
+### 5. Environment Variables
+- Access environment variables via `import.meta.env`.
+- All custom variables MUST be prefixed with `VITE_` (e.g., `VITE_API_URL`).
