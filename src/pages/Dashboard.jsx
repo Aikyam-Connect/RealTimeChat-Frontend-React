@@ -10,15 +10,35 @@ const Dashboard = () => {
     const [sidebarWidth, setSidebarWidth] = useState(() => {
         return parseInt(localStorage.getItem('sidebarWidth')) || 320;
     });
+    const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
     const { incomingCall, acceptCall, rejectCall, toasts, removeToast, currentRoom } = useChat();
 
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
+            if (window.visualViewport) {
+                setViewportHeight(window.visualViewport.height);
+            } else {
+                setViewportHeight(window.innerHeight);
+            }
         };
+
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', handleResize);
+            window.visualViewport.addEventListener('scroll', handleResize);
+        }
+
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener('resize', handleResize);
+                window.visualViewport.removeEventListener('scroll', handleResize);
+            }
+        };
     }, []);
 
     const handleMouseDown = (e) => {
@@ -103,7 +123,10 @@ const Dashboard = () => {
     }, [incomingCall]);
 
     return (
-        <div className="flex h-screen h-[100dvh] bg-slate-950 text-slate-100 overflow-hidden relative">
+        <div 
+            style={{ height: `${viewportHeight}px` }}
+            className="flex w-full bg-slate-950 text-slate-100 overflow-hidden relative"
+        >
             {/* Background grid details */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none opacity-20"></div>
 
